@@ -17,13 +17,13 @@ public class SQLInjection {
                         "root",
                         "password");
 
-        Statement stmt = con.createStatement();
+        PreparedStatement ps =
+                con.prepareStatement(
+                        "SELECT * FROM users WHERE username=?");
 
-        String query =
-                "SELECT * FROM users WHERE username='"
-                        + username + "'";
+        ps.setString(1, username);
 
-        stmt.executeQuery(query);
+        ps.executeQuery();
 
         con.close();
         sc.close();
